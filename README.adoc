@@ -2,6 +2,7 @@
 
 This library enables an Arduino board to communicate with the 1.5 Inch OLED RGB. 
 It simplifies the process for drawing shapes, lines, images, and text to the screen. 
+SPOI interface to OLED Controller: SSD1351
 
 Source Waveshare : https://www.waveshare.com/wiki/1.5inch_RGB_OLED_Module
 

@@ -4,9 +4,13 @@ This library enables an Arduino board to communicate with the 1.5 Inch OLED RGB.
 It simplifies the process for drawing shapes, lines, images, and text to the screen. 
 
 Improved version from WaveShare / STM32 libraries
+
 Created OLED_Driver Class
+
 Solved color bugs
+
 Added transarant Text
+
 
 For more information about this library please visit us at
 https://github.com/javos65/Arduino_OLED_driver

@@ -205,8 +205,9 @@ void OLED_Driver::rgb_Clear(void)
     // fill!
     OLED_WriteReg(0x5C);
 
-    for(i=0; i<RGB_WIDTH*RGB_HEIGHT*2; i++){
-        OLED_WriteData(0x00);
+    for(i=0; i<RGB_WIDTH*RGB_HEIGHT; i++){
+        OLED_WriteData(Paint.Color>>8);
+        OLED_WriteData(Paint.Color);
     }
 }
 
@@ -298,7 +299,7 @@ void OLED_Driver::Paint_NewImage(UBYTE *image, UWORD Width, UWORD Height, UWORD 
     Paint.WidthMemory = Width;
     Paint.HeightMemory = Height;
     Paint.Color = Color;    
-    Paint.Scale = 2;
+    Paint.Scale = 65;
     
     Paint.WidthByte = (Width % 8 == 0)? (Width / 8 ): (Width / 8 + 1);
     Paint.HeightByte = Height;    
@@ -740,7 +741,7 @@ void OLED_Driver::Paint_DrawChar(UWORD Xpoint, UWORD Ypoint, const char Acsii_Ch
     for ( Column = 0; Column < Font->Width; Column ++ ) {
 
       //To determine whether the font background color and screen background color is consistent
-      if ( (Paint.Color == Color_Background) || (TRANSPARANT == Color_Background)) { //this process is to speed up the scan or wrtie transparant background
+      if ( TRANSPARANT == Color_Background) { //this process is to speed up the scan or wrtie transparant background
         if (pgm_read_byte(ptr) & (0x80 >> (Column % 8)))
           Paint_SetPixel (Xpoint + Column, Ypoint + Page, Color_Foreground );
       } else {

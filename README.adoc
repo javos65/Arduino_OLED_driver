@@ -3,6 +3,9 @@
 This library enables an Arduino board to communicate with the 1.5 Inch OLED RGB. 
 It simplifies the process for drawing shapes, lines, images, and text to the screen. 
 
+Source WaveshaRE :https://www.waveshare.com/wiki/1.5inch_RGB_OLED_Module
+
+
 Improved version from WaveShare / STM32 libraries
 
 Created OLED_Driver Class

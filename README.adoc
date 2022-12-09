@@ -13,7 +13,9 @@ Created OLED_Driver Class
 
 Solved color bugs
 
-Added transarant Text
+Added transparant Text
+
+Build new DEMO
 
 
 For more information about this library please visit us at

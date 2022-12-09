@@ -1,0 +1,95 @@
+#######################################
+# Syntax Coloring Map For OLED DRIVER
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+OLED_Driver	KEYWORD1 OLED_Driver
+UBYTE 		KEYWORD1 UBYTE
+UWORD 		KEYWORD1 UBWORD
+UDOUBLE		KEYWORD1 UDOUBLE
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+rgb_Init	   	KEYWORD2
+rgb_Clear	   	KEYWORD2
+rgb_Set_Point	   	KEYWORD2
+rgb_Display	   	KEYWORD2
+rgb_Display_Part	   	KEYWORD2
+driverdelay_ms	   	KEYWORD2
+driverdelay_us	   	KEYWORD2
+systeminit	   	KEYWORD2
+Paint_NewImage	   	KEYWORD2
+Paint_SelectImage	   	KEYWORD2
+Paint_SetRotate	   	KEYWORD2
+Paint_SetMirroring	   	KEYWORD2
+Paint_SetPixel	   	KEYWORD2
+Paint_SetScale	   	KEYWORD2
+Paint_Clear	   	KEYWORD2
+Paint_ClearWindows	   	KEYWORD2
+Paint_DrawPoint	   	KEYWORD2
+Paint_DrawLine	   	KEYWORD2
+Paint_DrawRectangle	   	KEYWORD2
+Paint_DrawCircle	   	KEYWORD2
+Paint_DrawChar	   	KEYWORD2
+Paint_DrawString_EN	   	KEYWORD2
+Paint_DrawNum	   	KEYWORD2
+Paint_DrawTime	   	KEYWORD2
+Paint_DrawBitMap	   	KEYWORD2
+Paint_DrawBitMap_Block	   	KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+OLED		LITERAL1
+OLED_CS		LITERAL1
+OLED_RST 	LITERAL1
+OLED_DC		LITERAL1
+WHITE          LITERAL1
+BLACK          LITERAL1
+BLUE           LITERAL1
+ORANGE  LITERAL1
+PURPLE  LITERAL1
+BRED          LITERAL1
+GRED           LITERAL1
+GBLUE          LITERAL1
+RED            LITERAL1
+MAGENTA        LITERAL1
+GREEN          LITERAL1
+CYAN           LITERAL1
+YELLOW         LITERAL1
+BROWN          LITERAL1
+BRRED          LITERAL1
+GRAY           LITERAL1
+RGB_WIDTH	LITERAL1
+RGB_HEIGHT	LITERAL1
+ROTATE_0	   	LITERAL1
+ROTATE_90	   	LITERAL1
+ROTATE_180	   	LITERAL1
+ROTATE_270	   	LITERAL1
+DOT_PIXEL_1X1	   	LITERAL1
+DOT_PIXEL_2X2	   	LITERAL1
+DOT_PIXEL_3X3	   	LITERAL1
+DOT_PIXEL_4X4	   	LITERAL1
+DOT_PIXEL_5X5	   	LITERAL1
+DOT_PIXEL_6X6	   	LITERAL1
+DOT_PIXEL_7X7	   	LITERAL1
+DOT_PIXEL_8X8	   	LITERAL1
+DOT_FILL_AROUND	   	LITERAL1
+DOT_FILL_RIGHTUP	   	LITERAL1
+LINE_STYLE_SOLID	   	LITERAL1
+LINE_STYLE_DOTTED	   	LITERAL1
+DRAW_FILL_EMPTY	   	LITERAL1
+DRAW_FILL_FULL,	   	LITERAL1
+DOT_PIXEL_DFT	   	LITERAL1
+DOT_STYLE_DFT	   	LITERAL1
+GRAY1	   	LITERAL1
+GRAY2	   	LITERAL1
+GRAY3	   	LITERAL1
+GRAY4	   	LITERAL1

@@ -6,7 +6,7 @@
 *----------------
 * |	This version:   V3.0
 * | Date        :   2022
-* | Info        :	Pushed into Arduino Library format
+* | Info        :	Pushed into Arduino Library format by JayF
 * -----------------------------------------------------------------------------
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -114,10 +114,10 @@ typedef enum {
 
 
 //4 Gray level
-#define  GRAY1 0x03 //Blackest
-#define  GRAY2 0x02
-#define  GRAY3 0x01 //gray
-#define  GRAY4 0x00 //white
+#define  GRAY1 0x03 // Blackest
+#define  GRAY2 0x02 // dark gray
+#define  GRAY3 0x01 // lightgray
+#define  GRAY4 0x00 // white
 /**
  * The size of the point
 **/

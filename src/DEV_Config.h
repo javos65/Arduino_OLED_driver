@@ -18,7 +18,7 @@
 #define UWORD   uint16_t
 #define UDOUBLE uint32_t
 
-#define USE_SPI_4W  1  // MKR / Nano
+#define USE_SPI_4W  1  // MKR / Nano pin 11,12,13
 #define USE_IIC     0
 
 #define IIC_CMD        0X00
@@ -28,15 +28,15 @@
     //Use the  library function definition
 *****************************************************************************************/
 //GPIO config
-#define OLED_CS 3    // Orange : Uno 10 / Mkr 3
+#define OLED_CS 3    // Orange : 10 Uno / 3 Mkr / 10 Nano
 #define OLED_CS_0     digitalWrite(OLED_CS, LOW)
 #define OLED_CS_1     digitalWrite(OLED_CS, HIGH)
 
-#define OLED_RST 7   // White : 8 Uno  / 7 MKR
+#define OLED_RST 7   // White : 8 Uno  / 7 MKR / 9 Nano
 #define OLED_RST_0    digitalWrite(OLED_RST, LOW)
 #define OLED_RST_1    digitalWrite(OLED_RST, HIGH)
 
-#define OLED_DC 6   //Green : 7 Uno / 6 MKR
+#define OLED_DC 6   //Green : 7 Uno / 6 MKR / 8 Nano
 #define OLED_DC_0     digitalWrite(OLED_DC, LOW)
 #define OLED_DC_1     digitalWrite(OLED_DC, HIGH)
 

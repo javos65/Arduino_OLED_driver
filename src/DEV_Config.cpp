@@ -27,15 +27,15 @@ uint8_t System_Init(void)
 #if USE_SPI_4W
   //Serial.println("* USE_SPI");
   //set OLED SPI
-  //SPI.setDataMode(SPI_MODE3);  // no need MKR / UNO
-  //SPI.setBitOrder(MSBFIRST);   // no need MKR / UNO
-  //SPI.setClockDivider(SPI_CLOCK_DIV2); // no need MKR / UNO
+  //SPI.setDataMode(SPI_MODE3);  // no need MKR / UNO / Nano
+  //SPI.setBitOrder(MSBFIRST);   // no need MKR / UNO / Nano
+  //SPI.setClockDivider(SPI_CLOCK_DIV2); // no need MKR / UNO /Nano
   SPI.begin();
 
 #elif USE_IIC
   //set OLED I2C
   Serial.println("* USE_I2C");
-  OLED_DC_0;//DC = 1 => Address = 0x3d
+  OLED_DC_0;                //DC = 1 => Address = 0x3d
   OLED_CS_0;
   Wire.setClock(1000000);
   Wire.begin();

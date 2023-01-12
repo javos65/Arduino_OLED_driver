@@ -9,42 +9,60 @@ Demo for use of the OLED_Driver library
 #include <OLED_Driver.h>    // Arduino library for oled 1.5" RGB  WaveShare
 #include "ImageData.h"      // define spin image array
 
+//
+//Defines
+//
+#define DEBUG_X 1  // Debug info for messages
+//
+//Globals
+//
 OLED_Driver Myoled;
 
+
 void setup() {
-Serial.begin(115200);
-delay(2000);
-
-Serial.print("* Initialize system...\r\n");
-Serial.print("* Oled size: ");Serial.print(RGB_WIDTH);Serial.print("x");Serial.print(RGB_HEIGHT);Serial.println(" pixels.");
-Serial.print("* Pins - ChipSelect:");Serial.print(OLED_CS);Serial.print(", Reset:");Serial.print(OLED_RST);Serial.print(", DataCommand:");Serial.println(OLED_DC);
-
-  Myoled.systeminit();  // init IO and SPI serial - see DevConfig.h
-  Myoled.rgb_Init();    // Int
-  Myoled.driverdelay_ms(500); 
-
-//1.Create a new image size
-  UBYTE *BlackImage=NULL; // image structure
-Serial.print("* Create new image structure\r\n");
-  Myoled.Paint_NewImage(BlackImage, RGB_WIDTH, RGB_HEIGHT, 0, 0xefbe);  // rotation 0 - for all drawing functions - NOT for image dump
-  Myoled.Paint_SetScale(65);  // RGB resolution: 2,4,16,65
-
+ /*********** Serial SETUP  **********/
+ #if DEBUG_X
+int t=10;  //Initialize serial and wait for port to open, max 10 second waiting
+  Serial.begin(115200);
+  while (!Serial) {
+    ; delay(1000);
+    if ( (t--)== 0 ) break;
+  }
+Serial.println("* Oled Demo3, serial setup, starting Initialisation");
+#endif 
+/*********** OLED DISPLAY SETUP  **********/
+ #if DEBUG_X
+  Serial.print("* Oled size:");Serial.print(RGB_WIDTH);Serial.print("x");Serial.print(RGB_HEIGHT);Serial.println("pixels.");
+#endif 
+  Myoled.systemio(10,9,8);      // set IO ports for CS / DC / RTS
+  Myoled.systeminit();          // HW init IO and SPI serial - see DevConfig.h
+  Myoled.systemsize(128,128);   // Set pixel size display
+  SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE3));
+  Myoled.rgb_Init();            // Init screen : rest display, intialiseregisters
+  Myoled.rgb_Clear(0xefbe);
+// Create a new image size
+ #if DEBUG_X
+  Serial.println("* Oled Intialized\r\n");
+#endif 
 
 }
 
 void loop() {
-
+char message[64];
+int t=0;
    
-Myoled.rgb_Clear(); 
-Myoled.Paint_DrawString_EN(16, 96, "Loading..", FONT16, BLACK,0xefbe);
-for(int t=0;t<6;++t){
+Myoled.rgb_Clear(0xefbe); 
+sprintf(message,"Loading..");
+Myoled.set_font(&ArialI16);Myoled.set_cursor(36,96); t+=Myoled.draw_string(message,BLACK,0xefbe,0);
+for(int t=0;t<10;++t){
     for (int i=0;i<IPICT;++i){
-    Myoled.rgb_Display_Part(&spin[15-i][0], 40, 40, 40+ISIZEX, 40+ISIZEY); // image is 90 degrees
+    Myoled.rgb_Display_Part(&spin[15-i][0], 40, 40, 40+ISIZEX, 40+ISIZEY); 
+    delay(10);
     }    
   }
 
-Myoled.rgb_Display_Part(&spin[16][0], 40, 40, 40+ISIZEX, 40+ISIZEY); // image is 90 degrees
-Myoled.Paint_DrawString_EN(16, 96, " Ready ! ", FONT16, RED,0xefbe);
-Myoled.driverdelay_ms(2000);    
-  
+Myoled.rgb_Display_Part(&spin[16][0], 40, 40, 40+ISIZEX, 40+ISIZEY); 
+sprintf(message," Ready !!");
+Myoled.set_font(&ArialI16);Myoled.set_cursor(36,96); t+=Myoled.draw_string(message,DARK_RED,0xefbe,0); 
+  delay(2000);
 }

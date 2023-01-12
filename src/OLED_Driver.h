@@ -6,41 +6,60 @@
 *----------------
 * |	This version:   V3.0
 * | Date        :   2022
-* | Info        :	Pushed into Arduino Library format by JayF
+* | Info        :	Pushed into Arduino Library format
 * -----------------------------------------------------------------------------
 #
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documnetation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to  whom the Software is
-# furished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS OR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
 #
 ******************************************************************************/
 #ifndef __OLED_DRIVER_H
 #define __OLED_DRIVER_H		
 
-#include "DEV_Config.h"
+#include <SPI.h>
 #include "fonts.h"
 
+/**
+ * data types
+**/
+#define UBYTE   uint8_t
+#define UWORD   uint16_t
+#define UDOUBLE uint32_t
+#define USE_SPI_4W  1  // MKR / Nano
+
+/****************************************************************************************
+    //IO Use the  library function definition
+*****************************************************************************************/
+//GPIO config
+#define OLED_CS 10    // Orange : Uno 10 / Mkr 3 / Nano 10
+#define OLED_CS_0     digitalWrite(pinCS, LOW)
+#define OLED_CS_1     digitalWrite(pinCS, HIGH)
+
+#define OLED_DC 9   //Green : 7 Uno / 6 MKR / Nano 9
+#define OLED_DC_0     digitalWrite(pinDC, LOW)
+#define OLED_DC_1     digitalWrite(pinDC, HIGH)
+
+#define OLED_RST 8   // White : 8 Uno  / 7 MKR / Nano 8
+#define OLED_RST_0    digitalWrite(pinRST, LOW)
+#define OLED_RST_1    digitalWrite(pinRST, HIGH)
+
 /********************************************************************************
-function:	
 		Define the full screen height length of the display
 ********************************************************************************/
+#define RGB_WIDTH  128          //OLED width base
+#define RGB_HEIGHT 128          //OLED height base
+#define MAXLINEBUFFER 256
 
-#define RGB_WIDTH  128//OLED width
-#define RGB_HEIGHT 128 //OLED height
+/********************************************************************************
+		Define used fonths
+********************************************************************************/
+//extern lv_font_t SegmentNumber56;
+extern lv_font_t HeavyNumber36;
+extern lv_font_t Fatregular32;
+extern lv_font_t Arcon24;
+//extern lv_font_t Arcon16;
+extern lv_font_t ArialI16; // italic
+extern lv_font_t Arial16;
+extern lv_font_t ArialB14; // old
+extern lv_font_t Courier12;
 
 /*
  * Image attributes
@@ -61,63 +80,38 @@ typedef struct {
 extern PAINT Paint;
 
 /**
- * Display rotate
-**/
-#define ROTATE_0            0
-#define ROTATE_90           90
-#define ROTATE_180          180
-#define ROTATE_270          270
-
-/**
- * Display Flip
-**/
-typedef enum {
-    MIRROR_NONE  = 0x00,
-    MIRROR_HORIZONTAL = 0x01,
-    MIRROR_VERTICAL = 0x02,
-    MIRROR_ORIGIN = 0x03,
-} MIRROR_IMAGE;
-#define MIRROR_IMAGE_DFT MIRROR_NONE
-
-/**
- * font typpe adress - usable in drawcha calls
-**/
-
-#define FONT24 &Font24
-#define FONT20 &Font20
-#define FONT16 &Font16
-#define FONT12 &Font12
-#define FONT8  &Font8
-
-/**
  * image color
 **/
-
 #define WHITE          0xFFFF
 #define BLACK          0x0000
-#define BLUE           0x001F
-#define BRED           0XF81F
-#define GRED           0XFFE0
-#define GBLUE          0X07FF
+#define BLUE           0x101F
+#define MARINE_BLUE    0x2B5F
+#define DARK_BLUE      0x00EC
+#define GREEN_BLUE     0x0792
+#define LIGHT_BLUE     0x74FF
 #define RED            0xF800
+#define DARK_RED       0x6000
+#define LIGHT_RED      0xF9C7
+#define PINK           0xFCB2
+#define MEDIUM_RED     0xD800
+
+#define VIOLET         0xc035
 #define MAGENTA        0xF81F
 #define PURPLE         0x981F
-#define ORANGE         0xFC40
+#define ORANGE         0xFC61
 #define GREEN          0x07E0
+#define BRIGHT_GREEN   0x77E0
 #define CYAN           0x7FFF
 #define YELLOW         0xFFE0
-#define BROWN          0XBC40
-#define BRRED          0XFC07
+#define BROWN          0x79A0
 #define GRAY           0X8430
+#define LIGHT_GRAY     0xF7BE
+#define DARK_GRAY      0x4228
+#define DARKER_GRAY    0x18E3
+#define GOLD           0xDD8D
+#define SILVER         0xad76
+#define TRANSPARANT    0X0001// USED FOR TEXT on TRANSPARANT BACKGROUND, close to Black
 
-#define TRANSPARANT    0X0001// USED FOR TEXT on TRANSPARANT BACKGROUND.
-
-
-//4 Gray level
-#define  GRAY1 0x03 // Blackest
-#define  GRAY2 0x02 // dark gray
-#define  GRAY3 0x01 // lightgray
-#define  GRAY4 0x00 // white
 /**
  * The size of the point
 **/
@@ -161,38 +155,32 @@ typedef enum {
 /**
  * Custom structure of a time attribute
 **/
-typedef struct {
-    UWORD Year;  //0000
-    UBYTE Month; //1 - 12
-    UBYTE Day;   //1 - 30
-    UBYTE Hour;  //0 - 23
-    UBYTE Min;   //0 - 59
-    UBYTE Sec;   //0 - 59
-} PAINT_TIME;
 
-extern PAINT_TIME sPaint_time;
 
 class OLED_Driver
 {
 public:
 	OLED_Driver();
 	void rgb_Init(void);
-	void rgb_Clear(void);
+	void rgb_Clear(UWORD Color);
 	void rgb_Set_Point(UBYTE Xpoint, UBYTE Ypoint, UWORD Color);
+    void rgb_Set_Block(UBYTE Xstart, UBYTE Ystart, UBYTE Xend, UBYTE Yend,UWORD Color);
+    void rgb_Set_BlockF(UBYTE Xstart, UBYTE Ystart, UBYTE Xend, UBYTE Yend,UWORD Color1,UWORD Color2);
 	void rgb_Display(const UBYTE *Image);
 	void rgb_Display_Part(const UBYTE *Image, UBYTE Xstart, UBYTE Ystart, UBYTE Xend, UBYTE Yend);
-    void driverdelay_ms(unsigned long xms);
-	void driverdelay_us(int xus);
+    void rgb_Display_Line( UBYTE *Line, UBYTE Xstart, UBYTE Ystart, UBYTE Length); 
 	uint8_t systeminit(void);
+    uint8_t systemio(int cs,int dc, int rst);
+    uint8_t systemsize(uint16_t x,uint16_t yt);
+// Character Font handling    
+    void set_font(lv_font_t *f);
+    void set_cursor(uint8_t x, uint8_t y);
+    uint8_t draw_string(char *s, uint16_t color,uint16_t bcolor, int8_t space);
+    uint8_t draw_char(char c, uint16_t color,uint16_t bcolor,int8_t space);
+
 //init and Clear
 	void Paint_NewImage(UBYTE *image, UWORD Width, UWORD Height, UWORD Rotate, UWORD Color);
-	void Paint_SelectImage(UBYTE *image);
-	void Paint_SetRotate(UWORD Rotate);
-	void Paint_SetMirroring(UBYTE mirror);
 	void Paint_SetPixel(UWORD Xpoint, UWORD Ypoint, UWORD Color);
-	void Paint_SetScale(UBYTE scale);
-	void Paint_Clear(UWORD Color);
-	void Paint_ClearWindows(UWORD Xstart, UWORD Ystart, UWORD Xend, UWORD Yend, UWORD Color);
 
 //Drawing
 	void Paint_DrawPoint(UWORD Xpoint, UWORD Ypoint, UWORD Color, DOT_PIXEL Dot_Pixel, DOT_STYLE Dot_FillWay);
@@ -200,20 +188,13 @@ public:
 	void Paint_DrawRectangle(UWORD Xstart, UWORD Ystart, UWORD Xend, UWORD Yend, UWORD Color, DOT_PIXEL Line_width, DRAW_FILL Draw_Fill);
 	void Paint_DrawCircle(UWORD X_Center, UWORD Y_Center, UWORD Radius, UWORD Color, DOT_PIXEL Line_width, DRAW_FILL Draw_Fill);
 
-//Display string
-	void Paint_DrawChar(UWORD Xstart, UWORD Ystart, const char Acsii_Char, sFONT* Font, UWORD Color_Foreground, UWORD Color_Background);
-	void Paint_DrawString_EN(UWORD Xstart, UWORD Ystart, const char * pString, sFONT* Font, UWORD Color_Foreground, UWORD Color_Background);
-	void Paint_DrawNum(UWORD Xpoint, UWORD Ypoint, const char * Number,  sFONT* Font, UWORD Digit,UWORD Color_Foreground, UWORD Color_Background);
-	void Paint_DrawTime(UWORD Xstart, UWORD Ystart, PAINT_TIME *pTime, sFONT* Font, UWORD Color_Foreground, UWORD Color_Background);
-
-//pic
-	void Paint_DrawBitMap(const unsigned char* image_buffer);
-	void Paint_DrawBitMap_Block(const unsigned char* image_buffer, UBYTE Region);
-
 private:
 	void OLED_Reset(void);
 	void OLED_WriteReg(uint8_t Reg);
+    void OLED_WriteData(uint8_t Data);    
+    void OLED_WriteBuffer(uint8_t *Buf, uint16_t Count);
 	void OLED_InitReg(void);
-};
+    uint8_t System_Init(void);
 
+};
 #endif  

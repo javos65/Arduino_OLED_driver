@@ -1,13 +1,6 @@
-= OLED SSD1351 Library for Arduino =
+= OLED Library for Arduino =
 
-This library enables an Arduino board to communicate with the SDD1351 1.5 Inch OLED RGB. 
-It simplifies the process for drawing shapes, lines, images, and text to the screen. 
-Including:
-
-- Line, circle, rectangular drawing
-- Fast image line and block drawing
-- Speed up drawing by using buffer send over SPI
-- Included TTF fonts with antialiasing
+This library enables an Arduino board to communicate with the 1.5 Inch OLED RGB. It simplifies the process for drawing shapes, lines, images, and text to the screen. 
 
 For more information about this library please visit us at
 http://www.github

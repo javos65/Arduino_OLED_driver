@@ -461,15 +461,8 @@ void OLED_Driver::Paint_NewImage(UBYTE *image, UWORD Width, UWORD Height, UWORD 
 //    printf(" EPD_WIDTH / 8 = %d\r\n",  122 / 8);
    
     Paint.Rotate = Rotate;
-    Paint.Mirror = MIRROR_NONE;
-    
-    if(Rotate == ROTATE_0 || Rotate == ROTATE_180) {
-        Paint.Width = Width;
-        Paint.Height = Height;
-    } else {
         Paint.Width = Height;
         Paint.Height = Width;
-    }
 }
 
 
